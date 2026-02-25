@@ -1,3 +1,9 @@
+
+<?php 
+// require_once '../config/csrf.php';
+// $csrf= CSRF::generateToken();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,8 +42,10 @@
             </label>
              </div> 
           
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf; ?>">
+
       <input type="submit" class="btn btn-primary btn-block mt-2" value="Login">
-      <p class="mt-2">Don't have an account? <a href="signup.php">Sign up</a></p>
+      <p class="mt-2">Don't have an account? <a href="../views/signup.php">Sign up</a></p>
   </form>
 </div>
 

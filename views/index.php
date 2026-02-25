@@ -6,11 +6,8 @@
     <title>Home</title>
 </head>
 <body>
-<?php 
 
 
-
-?>    
 
 </body>
 </html>
