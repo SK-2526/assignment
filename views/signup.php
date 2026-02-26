@@ -1,4 +1,3 @@
-
 <?php 
 // require_once '../config/csrf.php';
 // $csrf = CSRF::generateToken();

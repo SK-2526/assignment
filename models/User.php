@@ -73,6 +73,39 @@ public function getAccountDetails($customer_id){
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+// Deposit Money
+public function depositMoney($account_id, $amount){
+
+    $sql = "UPDATE accounts SET balance = balance + ? WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("di", $amount, $account_id);
+    $stmt->execute();
+
+   
+    $type = "Deposit";
+    $sql2 = "INSERT INTO transactions (account_id, type, amount) VALUES (?,?,?)";
+    $stmt2 = $this->conn->prepare($sql2);
+    $stmt2->bind_param("isd", $account_id, $type, $amount);
+
+    return $stmt2->execute();
+}
+
+// Get Transactions
+public function getTransactions($account_id){
+
+    $sql = "SELECT type, amount, created_at 
+            FROM transactions 
+            WHERE account_id = ?
+            ORDER BY created_at DESC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $account_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 }
 
 

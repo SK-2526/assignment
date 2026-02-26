@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if(!isset($_SESSION['name'])){
+if(!isset($_SESSION['customer_id'])){
     header("Location: login.php");
     exit();
 }
@@ -42,6 +42,10 @@ header("Expires: 0");
     <a href="view_account.php" class="btn btn-info">
         View Account Details
     </a>
+
+    <a href="deposit.php" class="btn btn-warning">Deposit Money</a>
+    <a href="transaction_history.php" class="btn btn-dark">Transaction History</a>
+
 </div>
 
 <button id="viewCustomers" class="btn btn-success mb-3">VIEW DASHBOARD </button>
@@ -107,7 +111,3 @@ $(document).ready(function(){
 
 </body>
 </html>
-<?php 
-
-
-?>

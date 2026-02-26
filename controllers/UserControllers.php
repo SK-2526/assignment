@@ -72,15 +72,13 @@ public function login(){
 }
 
 public function list(){
-   $customer= $this->user->customer_list();  //model method call 
+    $customer= $this->user->customer_list();  //model method call 
 
    if(isset($_GET['ajax']) AND $_GET['ajax']== 1){
      header('Content-type: application/json');
      echo json_encode($customer);
      exit();
    }
-
-   include '../views/customerlist.php';
 }  
 
 public function exportPdf()
@@ -111,7 +109,6 @@ public function exportPdf()
     $pdf->Cell(30, 8, 'Deposit', 1);
     $pdf->Ln();
 
-    // Fetch data
     $db = new Database();
     $sql = "SELECT * FROM customers";
     $stmt = $db->conn->prepare($sql);
@@ -164,6 +161,42 @@ public function viewAccount(){
 
     header("Content-Type: application/json");
     echo json_encode($accounts);
+    exit();
+}
+
+public function deposit(){
+
+    if(!isset($_SESSION['customer_id'])){
+        header("Location: ../views/login.php");
+        exit();
+    }
+
+    $account_id = $_POST['account_id'];
+    $amount = $_POST['amount'];
+
+    if($amount <= 0){
+        die("Invalid amount");
+    }
+
+    $this->user->depositMoney($account_id, $amount);
+
+    header("Location: ../views/transaction_history.php");
+    exit();
+}
+
+public function transactionHistory(){
+
+    if(!isset($_SESSION['customer_id'])){
+        header("Location: ../views/login.php");
+        exit();
+    }
+
+    $account_id = $_GET['account_id'];
+
+    $transactions = $this->user->getTransactions($account_id);
+
+    header("Content-Type: application/json");
+    echo json_encode($transactions);
     exit();
 }
 
